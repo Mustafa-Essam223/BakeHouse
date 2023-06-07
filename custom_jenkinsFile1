@@ -1,0 +1,30 @@
+pipeline {
+    agent { label 'myAgent0' }
+    parameters {
+        choice(name: 'ENV', choices: ['development', 'testing', 'production',"release"])
+    } 
+    stages {
+        stage('build') {
+            steps {
+                echo 'build'
+                script{
+                    if (params.ENV == "release") {
+                        withCredentials([usernamePassword(credentialsId: 'DockerHub-Account', usernameVariable: 'USERNAME_MUSTAFA', passwordVariable: 'PASSWORD_MUSTAFA')]) {
+                            echo " =========================================== Release on Agent 0 ==========================================="
+                            sh '''
+                                docker login -u ${USERNAME_MUSTAFA} -p ${PASSWORD_MUSTAFA}
+                                docker build -t kareemelkasaby/bakehouseitismart:v${BUILD_NUMBER} .
+                                docker push kareemelkasaby/bakehouseitismart:v${BUILD_NUMBER}
+                                echo ${BUILD_NUMBER} > ../build.txt
+                            '''
+                        }
+                    }
+                    else {
+                        echo "user choosed ${params.ENV}"
+                    }
+                }
+            }
+        }
+      
+    }
+}
