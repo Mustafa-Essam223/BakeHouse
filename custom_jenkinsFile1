@@ -4,7 +4,7 @@ pipeline {
         choice(name: 'ENV', choices: ['development', 'testing', 'production',"release"])
     } 
     stages {
-        stage('build') {
+        stage('Building-Stage') {
             steps {
                 echo 'build'
                 script{
@@ -21,6 +21,17 @@ pipeline {
                     }
                     else {
                         echo "user choosed ${params.ENV}"
+                    }
+                }
+            }
+        }
+        stage('Display-Data'){
+            steps{
+                script{
+                    def choices = ["1] dev","2] test","3] prod","4] release"]
+                    echo "Available choices: "
+                    for (def ans in choices){
+                        echo "${ans}"
                     }
                 }
             }
