@@ -1,9 +1,18 @@
 pipeline {
-    agent { label 'slave1' }
+   agent any
    stages {
         stage('build') {
             steps {
-                echo 'build on slave1'
+                echo '======================== building on myAgent 0 & 1 ========================'
+                script{
+                 withCredentials([usernamePassword(credentialsId: 'DockerHub-Account', usernameVariable: 'usrName', passwordVariable: 'password')]) {
+                            sh '''
+                                docker login -u ${usrName} -p ${password}
+                                docker build -t kareemelkasaby/bakehouseitismart:v${BUILD_NUMBER} .
+                                docker push kareemelkasaby/bakehouseitismart:v${BUILD_NUMBER}
+                                echo ${BUILD_NUMBER} > ../build.txt
+                            '''
+                        }
                }
             }
    }
