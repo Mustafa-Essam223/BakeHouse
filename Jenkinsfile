@@ -42,7 +42,19 @@ pipeline {
                 }
             }
         }
+
+        stage("Display"){
+            steps{
+                echo "============= Displaying choices . . . "
+                
+                script{
+                     def choicesd = ['1] dev', '2] test', '3] prod',"4] release"]
+                     for (ans in choicesd){
+                            echo "${ans}"
+                     }
+                }
+            }
+        }
+
     }
 }
-
-
