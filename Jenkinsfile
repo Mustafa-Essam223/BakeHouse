@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'iti-smart' }
+    agent { label 'myAgent0' }
     parameters {
         choice(name: 'ENV', choices: ['dev', 'test', 'prod',"release"])
     } 
