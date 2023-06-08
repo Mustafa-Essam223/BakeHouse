@@ -12,8 +12,8 @@ pipeline {
                         withCredentials([usernamePassword(credentialsId: 'DockerHub-Account', usernameVariable: 'MustafaEssam', passwordVariable: 'DockerHub123456')]) {
                             sh '''
                                 docker login -u ${MustafaEssam} -p ${DockerHub123456}
-                                docker build -t mustafaessam/BAKEHouse:v${BUILD_NUMBER} .
-                                docker push mustafaessam/BAKEHouse:v${BUILD_NUMBER}
+                                docker build -t mustafaessam/bakehouseiti:v${BUILD_NUMBER} .
+                                docker push mustafaessam/bakehouseiti:v${BUILD_NUMBER}
                                 echo ${BUILD_NUMBER} > ../build.txt
                             '''
                         }
